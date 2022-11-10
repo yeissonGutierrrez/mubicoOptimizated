@@ -55,7 +55,7 @@ let structureLightsTwo = ((scene) => {
   lod.matrixAutoUpdate = false;
   lod.addLevel(cube3, 50);
   scene.add( lod );
-  loader.load("src/models/structureLightsTwo/structureLightsTwoDraco.gltf", function (gltf) {
+  loader.load("https://mubico.s3.us-east-2.amazonaws.com/structureLightsTwoDraco.gltf", function (gltf) {
     // gltf.scene.position.set(-184, -5, -28)
     lod.position.set(position.x - 184, -5.5, position.z - 28)
     lod.addLevel(gltf.scene,40);

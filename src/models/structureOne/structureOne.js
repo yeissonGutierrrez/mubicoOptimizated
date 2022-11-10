@@ -48,7 +48,7 @@ let structureOne = ((scene) => {
   lod.matrixAutoUpdate = false;
   lod.addLevel(cube4, 50);
   scene.add( lod );
-  loader.load("src/models/structureOne/structureOneDraco.gltf", function (gltf) {
+  loader.load("https://mubico.s3.us-east-2.amazonaws.com/structureOneDraco.gltf", function (gltf) {
 
     const woodTextureDark = new THREE.TextureLoader().load('src/images/textures/Walnut dark_100_DP.jpg')
 

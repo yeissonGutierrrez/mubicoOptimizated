@@ -35,7 +35,7 @@ loader.setDRACOLoader( dracoLoader );
 
 let orchidText = ((scene) => {
 
-  loader.load("src/models/orchidText/orchidTextDraco.gltf", function (gltf) {
+  loader.load("https://mubico.s3.us-east-2.amazonaws.com/orchidTextDraco.gltf", function (gltf) {
     gltf.scene.position.set(0, -7, 0)
     gltf.scene.getObjectByName('orchidWithbasegltf').scale.set(3,3,3)
 

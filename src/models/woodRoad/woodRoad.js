@@ -36,7 +36,7 @@ loader.setDRACOLoader( dracoLoader );
 //get mouse cords
 
 let woodRoad = new Promise((res, rej) => {
-  loader.load("src/models/woodRoad/woodRoad.gltf",
+  loader.load("https://mubico.s3.us-east-2.amazonaws.com/woodRoad.gltf",
     function (gltf) {
       gltf.scene.position.set(-184, -5, -28)
 

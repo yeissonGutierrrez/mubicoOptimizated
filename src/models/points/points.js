@@ -37,7 +37,7 @@ loader.setDRACOLoader( dracoLoader );
 
 let points = ((scene,pointsNames, objects) => {
 
-  loader.load("src/models/points/movePoints.gltf", function (gltf) {
+  loader.load("https://mubico.s3.us-east-2.amazonaws.com/movePoints.gltf", function (gltf) {
 
     gltf.scene.position.set(-184, -5, -28)
     

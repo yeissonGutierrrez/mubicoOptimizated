@@ -37,7 +37,7 @@ loader.setDRACOLoader( dracoLoader );
 
 
 let garden = new Promise((res, rej) => {
-  loader.load("src/models/garden/newBaseGardenDraco.gltf",
+  loader.load("https://mubico.s3.us-east-2.amazonaws.com/newBaseGardenDraco.gltf",
     function (gltf) {
       gltf.scene.position.set(-184, -5, -28)
 
