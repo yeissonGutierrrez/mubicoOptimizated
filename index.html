@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mubico</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="js/three.js" defer></script>
+    <script src="js/Gsap.js" defer></script>
+    <script src="js/Stats.js" type="module" defer></script>
+    <script src="js/GLTFLoader.js" defer></script>
+    <script src="js/RGBELoader.js" defer></script>
+    <!-- <script src="js/HDRCubeTextureLoader.js" defer></script> -->
+    <script src="js/DRACOLoader.js" defer></script>
+    <script src="js/OrbitControls.js" defer></script>
+    <script src="js/TrackballControls.js" defer></script>
+    <script src="src/index.js" type="module"></script>
+    <!-- <script src="src/models/orquidsModal/orchidsModal.js" type="module"></script> -->
+
+    <style>
+
+        @font-face {
+            font-family: 'Flama-bold';
+            src: url(./src/fonts/Flama-Bold.otf);
+        }
+
+        @font-face {
+            font-family: 'Flama-book';
+            src: url(./src/fonts/Flama-Book.otf);
+        }
+
+        @keyframes example {
+            0% { transform: scale(0); opacity: 0;}
+            100% { transform: scale(1); opacity: 1;}
+        }
+
+        #modal {
+            display: none;
+            background-color: rgb(51, 51, 51);
+            border: solid white 2px;
+            padding: 30px;
+            border-radius: 50px;
+            color: white;
+            position: absolute; 
+            top: 10px; 
+            width: 470px; 
+            min-height: 350px; 
+            max-height: 450px;
+            left: 0; right: 0; 
+            top: 0; bottom: 0; 
+            margin: auto; 
+            animation: example; 
+            animation-duration: 0.3s;
+            z-index: 2;
+            touch-action: auto !important;
+        }
+
+        .modal3d {
+            position: relative;
+            display: none;
+            touch-action: auto !important;
+            /* background-color: rgb(51, 51, 51); */
+            border: solid white 2px;
+            padding: 30px;
+            border-radius: 50px;
+            color: white;
+            position: absolute; 
+            top: 10px; 
+            max-width: 670px; 
+            max-height: 450px; 
+            left: 0; right: 0; 
+            top: 0; bottom: 0; 
+            margin: auto; 
+            animation: example; 
+            animation-duration: 0.3s;
+            z-index: 3;
+            overflow: hidden;
+            background-color: rgb(59, 59, 59);
+        }
+
+        .orchid3d {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            height: 100%;
+        }
+        
+        #modal h1 {
+            font-size: 27px;
+            font-family: 'Flama-book';
+            font-weight: 400;
+        }
+        
+        #modal .sec_1 {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            height: 100%;
+            width: 15%;
+        }
+        
+        #modal .sec_1 img{
+            max-width: 50px;
+        }
+        
+        #modal .sec_2 {
+            display: none;
+            padding-left: 20px;
+            width: 85%;
+        }
+        
+        #modal h3 {
+            text-transform: uppercase;
+            font-family: 'Flama-bold';
+            font-size: 14px;
+            font-weight: 400;
+            margin-top: 20px;
+        }
+        
+        #modal p {
+            font-size: 14px;
+            font-family: 'Flama-book';
+            font-weight: 400;
+        }
+        
+        .customButton {
+            font-weight: 400;
+            border-radius: 80px;
+            background: linear-gradient(90deg, rgba(252, 147, 96, 1),rgba(40, 154, 180, 1));
+            padding: 5px 10px;
+            font-size: 20px;
+            border: none;
+            outline: none;
+            color: white;
+            margin: 20px 0;
+        }
+
+        #loader {
+            position: absolute;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            /* background-color: aliceblue; */
+            background-color: black;
+            background-image: url('./src/images/Portada\ mubico.jpg');
+            background-position: 0px 50px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            z-index: 100;
+        }
+
+        #error {
+            position: fixed;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            /* background-color: aliceblue; */
+            background-color: black;
+            background-image: url('./src/images/Portada\ mubico.jpg');
+            background-position: 0px 50px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: none;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            z-index: 5;
+        }
+
+        #error > .infoSeccion {
+            color: white;
+            position: absolute;
+            right: 0;
+            font-family: 'Flama-bold';
+            font-weight: 300;
+            width: 400px;
+        }
+
+        #loader > .infoSeccion {
+            color: white;
+            position: absolute;
+            right: 0;
+            font-family: 'Flama-bold';
+            font-weight: 300;
+            width: 400px;
+        }
+        
+        #loader > .infoSeccion > h1 {
+            font-family: 'Flama-bold';
+        }
+
+        #loader > .infoSeccion > p {
+            margin: 30px 0 80px 0;
+            font-size: 20px;
+            font-family: 'Flama-book';
+        }
+
+        #loader > .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            position: absolute;
+            top: 20px;
+            left: 90px;
+            font-family: 'Flama-book';
+            font-weight: 400;
+            height: 50px;
+            width: 185px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        
+        #loader > .header > span {
+            font-family: 'Flama-book';
+            font-weight: 300;
+            font-size: 20px;
+            text-transform: uppercase;
+        }
+        
+        #loader > .header > hr {
+            width: 100%;
+            transform: rotate(90deg);
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 10px;
+            right: 80px;
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            align-items: center;
+            height: 40px;
+        }
+
+        .footer > .info {
+            display: flex;
+            align-items: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .footer > .info > img {
+            width: 15px;
+        }
+        
+        .credits {
+            color: white;
+            font-family: 'Flama-book';
+            font-weight: 300;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .footer > .info > span {
+            font-family: 'Flama-book';
+            font-weight: 300;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .footer > .info > hr {
+            width: 50px;
+            transform: rotate(90deg);
+        }
+        
+        #startButton {
+            font-family: 'Flama-book';
+            text-transform: uppercase;
+            background-color: white;
+            height: 50px;
+            border-radius: 60px;
+            border: none;
+            font-size: 24px;
+            width: 250px;
+        }
+
+        .lds-dual-ring {
+            display: block;
+            width: 20px;
+            height: 20px;
+            margin: 0px;
+            margin-bottom: 30px;
+        }
+        .lds-dual-ring:after {
+            content: " ";
+            display: block;
+            width: 24px;
+            height: 24px;
+            margin: 8px;
+            border-radius: 50%;
+            border: 6px solid rgb(255, 255, 255);
+            border-color: rgb(255, 255, 255) transparent rgb(39, 105, 69) transparent;
+            animation: lds-dual-ring 1.2s linear infinite;
+        }
+
+        #loadText {
+            color: white;
+            font-family: 'Flama-book';
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        #playButton {
+            display: none;
+            font-family: 'Flama-book';
+            text-transform: uppercase;
+            background-color: white;
+            height: 50px;
+            border-radius: 60px;
+            border: none;
+            font-size: 24px;
+            width: 250px;
+            margin-bottom: 20px;
+        }
+        .fadeIn {
+            animation: in .6s;
+            animation-fill-mode: forwards;
+        }
+
+        .fadeOut {
+            animation: out .6s;
+            animation-fill-mode: forwards;
+        }
+
+        #box {
+            /* background-color: aqua; */
+             position: absolute; 
+             top: 0;
+            /* display: block; */
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+        }
+        #c {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            display: block;
+            z-index: -1;
+        }
+
+        .modal3dClose {
+            position: relative;
+            background-color: transparent;
+            outline: none;
+            border: none;
+            color: white;
+            top: 20px;
+            z-index: 10;
+            right: 20px;
+            cursor: pointer;
+            font-family: 'Flama-bold';
+            font-size: 30px;
+            float: right;
+            cursor: pointer;
+        }
+
+        #buttonModal3d {
+            display: none;
+        }
+
+        #buttonModal3d2 {
+            display: none;
+        }
+
+        @keyframes in {
+            from { opacity: 0;  }
+            to { opacity: 1; }
+        }
+
+        @keyframes out {
+            from { opacity: 1;  }
+            to { opacity: 0; }
+        }
+
+        @keyframes lds-dual-ring {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <canvas id="c"></canvas>
+    <div data-diagram="box" id="box"></div>
+
+    <div id="loader">
+        <div class="header">
+            <span>mubico</span>
+            <hr/>
+            <img src="./src/images/mubicoLogo.svg" alt="">
+        </div>
+        <div class="infoSeccion">
+            <h1>
+                BIENVENIDO <br>
+                AL PRIMER <br>
+                ORQUIDEORAMA <br>
+                VIRTUAL
+            </h1>
+            <p>
+                Un recorrido en el que te <br>
+                encontrarás con algunas <br>
+                de las 4.270 especies de <br>
+                orquídeas registradas <br>
+                en colombia. <br> <br>
+                Nuestra especie <br>
+                ícono de nuestra cultura <br>
+                y biodiversidad.
+            </p>
+            <button id="playButton">INICIA AQUÍ</button>
+            <div id="loadingCircle" class="lds-dual-ring"></div>
+            <span id="loadText"></span>
+        </div>
+        <div class="footer">
+            <div class="credits">
+                <span>FOTOGRAFÍA: WHITE.RAINFOREST</span>
+            </div>
+            <div class="info">
+                <img src="./src/images/mubicoLogo.svg" alt="">
+                <hr>
+                <span>MUSEO De LA BIoDIVERSIDAD De COlOMBIA</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="loaderPaused">
+        <div class="header">
+            <span>mubico</span>
+            <hr/>
+            <img src="./src/images/mubicoLogo.svg" alt="">
+        </div>
+        <div class="infoSeccion">
+            <h1>
+                BIENVENIDO <br>
+                AL PRIMER <br>
+                ORQUIDEORAMA <br>
+                VIRTUAL
+            </h1>
+            <p>
+                Un recorrido en el que te <br>
+                encontrarás con algunas <br>
+                de las 4.270 especies de <br>
+                orquídeas registradas <br>
+                en colombia. <br> <br>
+                Nuestra especie <br>
+                ícono de nuestra cultura <br>
+                y biodiversidad.
+            </p>
+            <button id="playButton">INICIA AQUÍ</button>
+            <div id="loadingCircle" class="lds-dual-ring"></div>
+            <span id="loadText"></span>
+        </div>
+        <div class="footer">
+            <div class="credits">
+                <span>FOTOGRAFÍA: WHITE.RAINFOREST</span>
+            </div>
+            <div class="info">
+                <img src="./src/images/mubicoLogo.svg" alt="">
+                <hr>
+                <span>MUSEO De LA BIoDIVERSIDAD De COlOMBIA</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="error">
+        <div class="infoSeccion">
+            <h1>
+                BIENVENIDO <br>
+                AL PRIMER <br>
+                ORQUIDEORAMA <br>
+                VIRTUAL
+            </h1>
+            <p>
+                Un recorrido en el que te <br>
+                encontrarás con algunas <br>
+                de las 4.270 especies de <br>
+                orquídeas registradas <br>
+                en colombia. <br> <br>
+                Nuestra especie <br>
+                ícono de nuestra cultura <br>
+                y biodiversidad.
+            </p>
+            <br>
+            <span id="loadText">Para iniciar el recorrido virtual se requiere usar el navegador Chrome</span>
+        </div>
+    </div>
+    <div id="modal">
+        <div class="opacity"></div>
+        <div class="sec_1">
+            <img src="./src/images/mubicoLogo.png" alt="logo" srcset="">
+            <button style="background-color: transparent; outline: none; border: none; cursor: pointer;"  id="close" style="width: 100%; cursor: pointer;">
+                <img src="./src//images/navigate_before.png" alt="before">
+            </button>
+        </div>
+        <div class="sec_2" id="orchidInfo1">
+            <h1>Odontoglossum crispum:</h1>
+            <button class="customButton">Odontoglossum</button>
+
+            <h3>familia</h3>
+            <p>Odontoglossum</p>
+
+            <h3>ORIGEN</h3>
+            <p>Especie endémica de Colombia, se halla en la cordillera oriental. Hay cerca de 3 variedades naturales de estas plantas que pueden presentar manchas y tonalidades marrón lila-claro lo que incrementa su rareza. Aún no se conoce cuál puede ser su polinizador natural y no posee fragancia. Según la Unión Internacional para la Conservación de la Naturaleza, se encuentra en la categoría de amenaza: En Peligro (EN).</p>
+
+            <h3>LONGEVIDAD</h3>
+            <p>Vive entre 3 a 7 años en interiores.</p>
+            
+            <button class="customButton" id="buttonModal3d">open 3d modal</button>
+        </div>
+
+        <div class="sec_2" id="orchidInfo2">
+            <h1>Odontoglossum cristatellum:</h1>
+            <button class="customButton">Odontoglossum</button>
+
+            <h3>familia</h3>
+            <p>Odontoglossum</p>
+
+            <h3>ORIGEN</h3>
+            <p>Esta especie, se encuentra en Colombia y Ecuador, se le puede hallar en bosques altoandinos de la cordillera central y parte de la occidental, es similar a la especie Odontoglossum luteopurpureum, la conocen popularmente como la orquídea de Bogotá, pero se diferencia principalmente por algunas formas que presenta la flor, esta posee una fragancia característica.</p>
+
+            <h3>LONGEVIDAD</h3>
+            <p>Vive entre 3 a 7 años en interiores.</p>
+            
+            <button class="customButton" id="buttonModal3d2">open 3d modal</button>
+        </div>
+    </div>
+
+
+    <div class="modal3d" id="modal3d">
+        <button style="width: 100px;" class="modal3dClose" id="modal3dClose">
+            X
+        </button>
+        <div class="orchid3d" data-diagram="modal3d">
+        </div> 
+    </div>
+
+    <div class="modal3d" id="modal3d2">
+        <button style="width: 100px;" class="modal3dClose" id="modal3dClose2">
+            X
+        </button>
+        <div class="orchid3d" data-diagram="modal3d2">
+        </div> 
+    </div>
+</body>
+</html>
