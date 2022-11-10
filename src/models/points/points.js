@@ -2,13 +2,13 @@ const manager = new THREE.LoadingManager();
 manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
   
   document.getElementById('loadText').innerHTML = 'Started loading file: Garden ' + ' .\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.'
-  console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
+  // console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
   
 };
 
 manager.onLoad = function ( ) {
   
-  document.getElementById('loadText').innerHTML = 'Loading complete!'
+  // document.getElementById('loadText').innerHTML = 'Loading complete!'
   
 };
 
@@ -16,7 +16,7 @@ manager.onLoad = function ( ) {
 manager.onProgress = function ( url, itemsLoaded, itemsTotal ) {
   
   document.getElementById('loadText').innerHTML = 'Loading file: Garden ' + ' .\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.'
-  console.log( 'Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
+  // console.log( 'Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
   
 };
 

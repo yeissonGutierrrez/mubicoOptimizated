@@ -380,7 +380,6 @@ if (browserData === 'Chrome') {
             y: point.geometry.attributes.position.array[1] - 3.2,
             z: point.geometry.attributes.position.array[2] - 28,
           }
-          console.log('pointer en position', currentPos)
           timeline.to(orbitControls.target, {
             x: point.geometry.attributes.position.array[0] - 184,
             y: point.geometry.attributes.position.array[1] - 3.2,
@@ -440,7 +439,6 @@ if (browserData === 'Chrome') {
               case pointsNames.find(e => e === meshCurrentClick.name):
                 gsapAnimations(meshCurrentClick.name)
     
-                console.log('click on a point')
                 return meshCurrentClick = null
     
               case 'OrchidBox1':
@@ -451,7 +449,6 @@ if (browserData === 'Chrome') {
                   buttonModal3d2.style.display = 'none'
                   buttonModal3d.style.display = 'flex'
                   
-                  console.log('click on a orchids')
 
                   return meshCurrentClick = null 
     
@@ -463,7 +460,7 @@ if (browserData === 'Chrome') {
                   buttonModal3d.style.display = 'none'
                   buttonModal3d2.style.display = 'flex'
                   
-                  console.log('click on a orchids')
+
 
                   return meshCurrentClick = null     
     
@@ -475,7 +472,7 @@ if (browserData === 'Chrome') {
                   buttonModal3d2.style.display = 'none'
                   buttonModal3d.style.display = 'flex'
                   
-                  console.log('click on a orchids')
+
 
                   return meshCurrentClick = null 
     
@@ -487,7 +484,7 @@ if (browserData === 'Chrome') {
                   buttonModal3d.style.display = 'none'
                   buttonModal3d2.style.display = 'flex'
                   
-                  console.log('click on a orchids')
+
 
                   return meshCurrentClick = null     
     
@@ -499,7 +496,7 @@ if (browserData === 'Chrome') {
                   buttonModal3d2.style.display = 'none'
                   buttonModal3d.style.display = 'flex'
                   
-                  console.log('click on a orchids')
+
 
                   return meshCurrentClick = null 
     
@@ -511,7 +508,7 @@ if (browserData === 'Chrome') {
                   buttonModal3d.style.display = 'none'
                   buttonModal3d2.style.display = 'flex'
                   
-                  console.log('click on a orchids')
+
 
                   return meshCurrentClick = null 
               
@@ -524,7 +521,6 @@ if (browserData === 'Chrome') {
                 buttonModal3d2.style.display = 'none'
                 buttonModal3d.style.display = 'flex'
                 
-                console.log('click on a orchids')
 
                 return meshCurrentClick = null 
              
@@ -543,7 +539,7 @@ if (browserData === 'Chrome') {
         window.addEventListener('dblclick', handleMeshsClick)
     
         var clock = new THREE.Clock()
-        console.log('clock', clock.getDelta())
+
         const animate = () => {
     
           raycaster.setFromCamera(pointer, camera)
@@ -576,7 +572,6 @@ if (browserData === 'Chrome') {
     
         animate()
     
-        console.log(pointsNames)
     
     
         //loader
@@ -604,7 +599,6 @@ if (browserData === 'Chrome') {
           let activitiInterval = setInterval(() => {
             if (counter <= 10) {
               counter++
-              console.log(counter)
             } else {
               paused = true
               clearInterval(activitiInterval)

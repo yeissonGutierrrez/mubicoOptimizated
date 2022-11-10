@@ -22,7 +22,6 @@ ModalScene.add(light)
 
 garden.then((gltf) => {
   ModalScene.add(gltf)
-  console.log('orchids modal',gltf)
   ModalCamera.lookAt(new THREE.Vector3(200, 200, 200));
   ModalCamera.position.set(0, 0, 0);
 
