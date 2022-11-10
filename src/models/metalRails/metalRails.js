@@ -33,7 +33,7 @@ loader.setDRACOLoader( dracoLoader );
 //get mouse cords
 
 let metalRails = new Promise((res, rej) => {
-  loader.load("src/models/metalRails/metalRail.gltf",
+  loader.load("https://mubico.s3.us-east-2.amazonaws.com/metalRail.gltf",
     function (gltf) {
       gltf.scene.position.set(-184, -5, -28)
 
