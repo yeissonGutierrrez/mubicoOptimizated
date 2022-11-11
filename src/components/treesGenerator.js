@@ -7,27 +7,27 @@
 function treesGenerator(treesGeo, treeJumper, sceneInfo) {
 
   let imgtree1 = document.createElement('img');
-  imgtree1.src = '../src/images/trees/Arboles 2.png'
+  imgtree1.src = './mubicoOptimizated/src/images/trees/Arboles 2.png'
   let sprite1 = new THREE.Texture(imgtree1);
   sprite1.needsUpdate = true;
 
   let imgtree2 = document.createElement('img');
-  imgtree2.src = '../src/images/trees/Arboles.png'
+  imgtree2.src = './mubicoOptimizated/src/images/trees/Arboles.png'
   let sprite2 = new THREE.Texture(imgtree2);
   sprite2.needsUpdate = true;
 
   let imgtree3 = document.createElement('img');
-  imgtree3.src = '../src/images/trees/_ANA_Astronium graveolens, Beltran_Hernandez (104)_-1.png'
+  imgtree3.src = './mubicoOptimizated/src/images/trees/_ANA_Astronium graveolens, Beltran_Hernandez (104)_-1.png'
   let sprite3 = new THREE.Texture(imgtree3);
   sprite3.needsUpdate = true;
 
   let imgtree4 = document.createElement('img');
-  imgtree4.src = '../src/images/trees/_ANA_Astronium graveolens, Beltran_Hernandez (618)_-1.png'
+  imgtree4.src = './mubicoOptimizated/src/images/trees/_ANA_Astronium graveolens, Beltran_Hernandez (618)_-1.png'
   let sprite4 = new THREE.Texture(imgtree4);
   sprite4.needsUpdate = true;
 
   let imgtree5 = document.createElement('img');
-  imgtree5.src = '../src/images/trees/_ARE_Sabal mauritiiformis, Beltran_Hernandez (1677)_-1.png'
+  imgtree5.src = './mubicoOptimizated/src/images/trees/_ARE_Sabal mauritiiformis, Beltran_Hernandez (1677)_-1.png'
   let sprite5 = new THREE.Texture(imgtree5);
   sprite5.needsUpdate = true;
 
