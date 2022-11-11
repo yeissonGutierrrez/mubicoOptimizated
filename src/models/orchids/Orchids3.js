@@ -1,40 +1,40 @@
 
-const manager = new THREE.LoadingManager();
-manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
-  
-  document.getElementById('loadText').innerHTML = 'Started loading file: Garden ' + ' .\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.'
-  
-};
+let Orchids3 = ((scene, id, object, modalsLoaded) => {
 
-manager.onLoad = function ( ) {
-  
-  document.getElementById('loadText').innerHTML = 'Loading complete!'
-  
-};
+  const manager = new THREE.LoadingManager();
+  manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+    
+    document.getElementById('loadText').innerHTML = 'Started loading file: Garden ' + ' .\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.'
+    
+  };
 
-
-manager.onProgress = function ( url, itemsLoaded, itemsTotal ) {
-  
-  document.getElementById('loadText').innerHTML = 'Loading file: Garden ' + ' .\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.'
-  
-};
-
-manager.onError = function ( url ) {
-  
-  document.getElementById('loadText').innerHTML =  'There was an error loading '
-
-};
+  manager.onLoad = function ( ) {
+    modalsLoaded.push('orchid3')
+    document.getElementById('loadText').innerHTML = 'Loading complete!'
+    
+  };
 
 
-const dracoLoader = new THREE.DRACOLoader();
-dracoLoader.setDecoderPath( 'https://www.gstatic.com/draco/v1/decoders/' );
-const loader = new THREE.GLTFLoader(manager);
-dracoLoader.setDecoderConfig({ type: 'js' });
-loader.setDRACOLoader( dracoLoader );
+  manager.onProgress = function ( url, itemsLoaded, itemsTotal ) {
+    
+    document.getElementById('loadText').innerHTML = 'Loading file: Garden ' + ' .\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.'
+    
+  };
 
-// gltf.scene.position.set(-184, -5, -28)
+  manager.onError = function ( url ) {
+    
+    document.getElementById('loadText').innerHTML =  'There was an error loading '
 
-let Orchids3 = ((scene, id, object) => {
+  };
+
+
+  const dracoLoader = new THREE.DRACOLoader();
+  dracoLoader.setDecoderPath( 'https://www.gstatic.com/draco/v1/decoders/' );
+  const loader = new THREE.GLTFLoader(manager);
+  dracoLoader.setDecoderConfig({ type: 'js' });
+  loader.setDRACOLoader( dracoLoader );
+
+  // gltf.scene.position.set(-184, -5, -28)
 
   var lod = new THREE.LOD();
 

@@ -1,29 +1,31 @@
 
-const manager = new THREE.LoadingManager();
-manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
-  
-  document.getElementById('loadText').innerHTML = 'Started loading file: Garden ' + ' .\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.'
-  
-};
-
-manager.onLoad = function ( ) {
-  
-  document.getElementById('loadText').innerHTML = 'Loading complete!'
-  
-};
+let Orchids4 = ((scene, id, object, modalsLoaded) => {
 
 
-manager.onProgress = function ( url, itemsLoaded, itemsTotal ) {
-  
-  document.getElementById('loadText').innerHTML = 'Loading file: Garden ' + ' .\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.'
-  
-};
+  const manager = new THREE.LoadingManager();
+  manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+    
+    document.getElementById('loadText').innerHTML = 'Started loading file: Garden ' + ' .\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.'
+    
+  };
 
-manager.onError = function ( url ) {
-  
-  document.getElementById('loadText').innerHTML =  'There was an error loading '
+  manager.onLoad = function ( ) {
+    modalsLoaded.push('orchid4')
+    document.getElementById('loadText').innerHTML = 'Loading complete!'
+  };
 
-};
+
+  manager.onProgress = function ( url, itemsLoaded, itemsTotal ) {
+    
+    document.getElementById('loadText').innerHTML = 'Loading file: Garden ' + ' .\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.'
+    
+  };
+
+  manager.onError = function ( url ) {
+    
+    document.getElementById('loadText').innerHTML =  'There was an error loading '
+
+  };
 
 
 const dracoLoader = new THREE.DRACOLoader();
@@ -34,7 +36,6 @@ loader.setDRACOLoader( dracoLoader );
 
 // gltf.scene.position.set(-184, -5, -28)
 
-let Orchids4 = ((scene, id, object) => {
   let wordDefaultPos = {
     x:-184,
     y: -5,

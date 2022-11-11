@@ -25,6 +25,7 @@ import Orchids5 from "./models/orchids/Orchids5.js";
 import Orchids6 from "./models/orchids/Orchids6.js";
 import Orchids7 from "./models/orchids/Orchids7.js";
 
+const loadedFiles = []
 
 var getBrowserInfo = function() {
   var ua= navigator.userAgent, tem, 
@@ -183,29 +184,31 @@ if (browserData === 'Chrome') {
       const raycaster = new THREE.Raycaster();
       let meshCurrentHover = null;
     
-      points(sceneInfo.scene,pointsNames,objects )
+      points(sceneInfo.scene,pointsNames,objects, loadedFiles )
       
-      Orchids1(sceneInfo.scene, orchids[0], objects)
-      Orchids2(sceneInfo.scene, orchids[1], objects)
-      Orchids3(sceneInfo.scene, orchids[2], objects)
-      Orchids4(sceneInfo.scene, orchids[3], objects)
-      Orchids5(sceneInfo.scene, orchids[4], objects)
-      Orchids6(sceneInfo.scene, orchids[5], objects)
-      Orchids7(sceneInfo.scene, orchids[6], objects)
+      Orchids1(sceneInfo.scene, orchids[0], objects, loadedFiles)
+      Orchids2(sceneInfo.scene, orchids[1], objects, loadedFiles)
+      Orchids3(sceneInfo.scene, orchids[2], objects, loadedFiles)
+      Orchids4(sceneInfo.scene, orchids[3], objects, loadedFiles)
+      Orchids5(sceneInfo.scene, orchids[4], objects, loadedFiles)
+      Orchids6(sceneInfo.scene, orchids[5], objects, loadedFiles)
+      Orchids7(sceneInfo.scene, orchids[6], objects, loadedFiles)
       
       woodRoad.then((gltf) => {
         sceneInfo.scene.add(gltf);
+        loadedFiles.push('woodRoad')
       })
     
-      structureLightsOne(sceneInfo.scene)
-      structureLightsTwo(sceneInfo.scene)
+      structureLightsOne(sceneInfo.scene, loadedFiles)
+      structureLightsTwo(sceneInfo.scene, loadedFiles)
     
-      structureOne(sceneInfo.scene)
+      structureOne(sceneInfo.scene, loadedFiles)
     
-      structureTwo(sceneInfo.scene)
+      structureTwo(sceneInfo.scene, loadedFiles)
     
       metalRails.then((gltf) => {
         sceneInfo.scene.add(gltf)
+        loadedFiles.push('metalRails')
       })
     
       
@@ -576,13 +579,21 @@ if (browserData === 'Chrome') {
     
         //loader
         
-        setTimeout(() => {
-          document.getElementById("loadText").innerHTML = "Loading complete!";
-        }, 8000);
         document.getElementById("loadingCircle").style.display = "none";
-    
+        
         let playButton = document.getElementById("playButton");
-        playButton.style.display = "block";
+        let loaderFilesInterval = setInterval(() => {
+          if (loadedFiles.length < 14) {
+            console.log(loadedFiles) 
+          } else {
+            console.log(loadedFiles) 
+            setTimeout(() => {
+              playButton.style.display = "block";
+              document.getElementById("loadText").innerHTML = "Loading complete!";
+              clearInterval(loaderFilesInterval)
+            }, 2000);
+          }
+        }, 2000);
     
         const loadertimeline = new gsap.timeline({
           defaults: {
