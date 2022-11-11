@@ -171,7 +171,7 @@ if (browserData === 'Chrome') {
       let lod = new THREE.LOD();
 
       let pointsNames = [];
-      let orchids = ['OrchidBox1', 'OrchidBox2', 'OrchidBox3', 'OrchidBox4', 'OrchidBox5', 'OrchidBox6', 'OrchidBox7'];
+      let orchids = ['OrchidBox1', 'OrchidBox2'];
       let objects = [];
 
       cube.position.set(-184, -5, -28)
@@ -187,11 +187,11 @@ if (browserData === 'Chrome') {
       
       Orchids1(sceneInfo.scene, orchids[0], objects)
       Orchids2(sceneInfo.scene, orchids[1], objects)
-      Orchids3(sceneInfo.scene, orchids[2], objects)
-      Orchids4(sceneInfo.scene, orchids[3], objects)
-      Orchids5(sceneInfo.scene, orchids[4], objects)
-      Orchids6(sceneInfo.scene, orchids[5], objects)
-      Orchids7(sceneInfo.scene, orchids[6], objects)
+      Orchids3(sceneInfo.scene, orchids[0], objects)
+      Orchids4(sceneInfo.scene, orchids[1], objects)
+      Orchids5(sceneInfo.scene, orchids[0], objects)
+      Orchids6(sceneInfo.scene, orchids[1], objects)
+      Orchids7(sceneInfo.scene, orchids[0], objects)
       
       woodRoad.then((gltf) => {
         sceneInfo.scene.add(gltf);

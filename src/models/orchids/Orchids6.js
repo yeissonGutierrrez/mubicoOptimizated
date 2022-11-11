@@ -60,7 +60,7 @@ let Orchids6 = ((scene, id, object) => {
   lod.matrixAutoUpdate = false;
   lod.addLevel(cube2, 30);
   scene.add( lod );
-  loader.load("src/models/orchids/orchidWithbaseDraco6.gltf", function (gltf) {
+  loader.load("src/models/orchids/orchidWithbaseDraco2.gltf", function (gltf) {
 
 
     let ICE_BOX = gltf.scene.getObjectByName('ICE_BOX').children.find(e => e.name === id)
