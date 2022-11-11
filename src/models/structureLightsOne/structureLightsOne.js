@@ -1,3 +1,5 @@
+let structureLightsOne = ((scene, loadedFiles) => {
+
 
 const manager = new THREE.LoadingManager();
 manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
@@ -8,7 +10,7 @@ manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
 };
 
 manager.onLoad = function ( ) {
-  
+  loadedFiles.push('structureLightsOne')
   document.getElementById('loadText').innerHTML = 'Loading complete!'
   // console.log( 'Loading complete!');
   
@@ -37,9 +39,6 @@ dracoLoader.setDecoderConfig({ type: 'js' });
 loader.setDRACOLoader( dracoLoader );
 
 // gltf.scene.position.set(-184, -5, -28)
-
-
-let structureLightsOne = ((scene) => {
 
   let position = {
     x: -88.8,

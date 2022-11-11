@@ -1,3 +1,5 @@
+let orchidText = ((scene, loadedFiles) => {
+
 
 const manager = new THREE.LoadingManager();
 manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
@@ -7,7 +9,7 @@ manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
 };
 
 manager.onLoad = function ( ) {
-  
+  loadedFiles.push('orchidText1')
   document.getElementById('loadText').innerHTML = 'Loading complete!'
   
 };
@@ -32,8 +34,6 @@ dracoLoader.setDecoderConfig({ type: 'js' });
 loader.setDRACOLoader( dracoLoader );
 
 // gltf.scene.position.set(-184, -5, -28)
-
-let orchidText = ((scene) => {
 
   loader.load("src/models/orchidText/orchidTextDraco.gltf", function (gltf) {
     gltf.scene.position.set(0, -7, 0)

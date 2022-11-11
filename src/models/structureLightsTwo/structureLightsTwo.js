@@ -1,4 +1,8 @@
-const manager = new THREE.LoadingManager();
+
+let structureLightsTwo = ((scene, loadedFiles) => {
+
+
+  const manager = new THREE.LoadingManager();
 manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
   
   document.getElementById('loadText').innerHTML = 'Started loading file: Garden ' + ' .\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.'
@@ -7,7 +11,7 @@ manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
 };
 
 manager.onLoad = function ( ) {
-  
+  loadedFiles.push('structureLightsTwo')
   document.getElementById('loadText').innerHTML = 'Loading complete!'
   // console.log( 'Loading complete!');
   
@@ -36,9 +40,6 @@ dracoLoader.setDecoderConfig({ type: 'js' });
 loader.setDRACOLoader( dracoLoader );
 
 // gltf.scene.position.set(-184, -5, -28)
-
-
-let structureLightsTwo = ((scene) => {
 
   let position = {
     x: -37.2,

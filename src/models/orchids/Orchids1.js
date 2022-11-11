@@ -1,40 +1,41 @@
-
-const manager = new THREE.LoadingManager();
-manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
-  
-  document.getElementById('loadText').innerHTML = 'Started loading file: Garden ' + ' .\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.'
-  
-};
-
-manager.onLoad = function ( ) {
-  
-  document.getElementById('loadText').innerHTML = 'Loading complete!'
-  
-};
+let Orchids1 = ((scene, id, object, loadedFiles) => {
 
 
-manager.onProgress = function ( url, itemsLoaded, itemsTotal ) {
-  
-  document.getElementById('loadText').innerHTML = 'Loading file: Garden ' + ' .\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.'
-  
-};
+  const manager = new THREE.LoadingManager();
+  manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+    
+    document.getElementById('loadText').innerHTML = 'Started loading file: Garden ' + ' .\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.'
+    
+  };
 
-manager.onError = function ( url ) {
-  
-  document.getElementById('loadText').innerHTML =  'There was an error loading '
+  manager.onLoad = function ( ) {
+    
+    loadedFiles.push('orchid1')
+    document.getElementById('loadText').innerHTML = 'Loading complete!'
+    
+  };
 
-};
+
+  manager.onProgress = function ( url, itemsLoaded, itemsTotal ) {
+    
+    document.getElementById('loadText').innerHTML = 'Loading file: Garden ' + ' .\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.'
+    
+  };
+
+  manager.onError = function ( url ) {
+    
+    document.getElementById('loadText').innerHTML =  'There was an error loading '
+
+  };
 
 
-const dracoLoader = new THREE.DRACOLoader();
-dracoLoader.setDecoderPath( 'https://www.gstatic.com/draco/v1/decoders/' );
-const loader = new THREE.GLTFLoader(manager);
-dracoLoader.setDecoderConfig({ type: 'js' });
-loader.setDRACOLoader( dracoLoader );
+  const dracoLoader = new THREE.DRACOLoader();
+  dracoLoader.setDecoderPath( 'https://www.gstatic.com/draco/v1/decoders/' );
+  const loader = new THREE.GLTFLoader(manager);
+  dracoLoader.setDecoderConfig({ type: 'js' });
+  loader.setDRACOLoader( dracoLoader );
 
-// gltf.scene.position.set(-184, -5, -28)
-
-let Orchids1 = ((scene, id, object) => {
+  // gltf.scene.position.set(-184, -5, -28)
 
   var lod = new THREE.LOD();
 

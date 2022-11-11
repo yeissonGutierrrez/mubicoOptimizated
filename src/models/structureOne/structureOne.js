@@ -1,4 +1,7 @@
-const manager = new THREE.LoadingManager();
+
+let structureOne = ((scene, loadedFiles) => {
+
+  const manager = new THREE.LoadingManager();
 manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
   
   document.getElementById('loadText').innerHTML = 'Started loading file: Garden ' + ' .\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.'
@@ -7,7 +10,7 @@ manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
 };
 
 manager.onLoad = function ( ) {
-  
+  loadedFiles.push('structureOne')
   document.getElementById('loadText').innerHTML = 'Loading complete!'
   // console.log( 'Loading complete!');
   
@@ -37,8 +40,6 @@ loader.setDRACOLoader( dracoLoader );
 
 // gltf.scene.position.set(-184, -5, -28)
 
-
-let structureOne = ((scene) => {
   var lod = new THREE.LOD();
   var geometry = new THREE.BoxBufferGeometry( 5, 5, 5 );
   var material = new THREE.MeshBasicMaterial( {color: 0x000000} );

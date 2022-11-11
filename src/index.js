@@ -25,6 +25,7 @@ import Orchids5 from "./models/orchids/Orchids5.js";
 import Orchids6 from "./models/orchids/Orchids6.js";
 import Orchids7 from "./models/orchids/Orchids7.js";
 
+const loadedFiles = []
 
 var getBrowserInfo = function() {
   var ua= navigator.userAgent, tem, 
@@ -183,34 +184,37 @@ if (browserData === 'Chrome') {
       const raycaster = new THREE.Raycaster();
       let meshCurrentHover = null;
     
-      points(sceneInfo.scene,pointsNames,objects )
+      points(sceneInfo.scene,pointsNames,objects, loadedFiles )
       
-      Orchids1(sceneInfo.scene, orchids[0], objects)
-      Orchids2(sceneInfo.scene, orchids[1], objects)
-      Orchids3(sceneInfo.scene, orchids[0], objects)
-      Orchids4(sceneInfo.scene, orchids[1], objects)
-      Orchids5(sceneInfo.scene, orchids[0], objects)
-      Orchids6(sceneInfo.scene, orchids[1], objects)
-      Orchids7(sceneInfo.scene, orchids[0], objects)
+      Orchids1(sceneInfo.scene, orchids[0], objects, loadedFiles)
+      Orchids2(sceneInfo.scene, orchids[1], objects, loadedFiles)
+      Orchids3(sceneInfo.scene, orchids[0], objects, loadedFiles)
+      Orchids4(sceneInfo.scene, orchids[1], objects, loadedFiles)
+      Orchids5(sceneInfo.scene, orchids[0], objects, loadedFiles)
+      Orchids6(sceneInfo.scene, orchids[1], objects, loadedFiles)
+      Orchids7(sceneInfo.scene, orchids[0], objects, loadedFiles)
       
       woodRoad.then((gltf) => {
         sceneInfo.scene.add(gltf);
+        loadedFiles.push('woodRoad')
       })
     
-      structureLightsOne(sceneInfo.scene)
-      structureLightsTwo(sceneInfo.scene)
+      structureLightsOne(sceneInfo.scene, loadedFiles)
+      structureLightsTwo(sceneInfo.scene, loadedFiles)
     
-      structureOne(sceneInfo.scene)
+      structureOne(sceneInfo.scene, loadedFiles)
     
-      structureTwo(sceneInfo.scene)
+      structureTwo(sceneInfo.scene, loadedFiles)
     
       metalRails.then((gltf) => {
         sceneInfo.scene.add(gltf)
+        loadedFiles.push('metalRails')
       })
     
       
       garden.then((gltf) => {
         sceneInfo.scene.add(gltf);
+        loadedFiles.push('garden')
         camera.lookAt(new THREE.Vector3(0, 0, 0));
         // camera.position.set(-274, -1.5, -6,);
     
@@ -576,13 +580,23 @@ if (browserData === 'Chrome') {
     
         //loader
         
-        setTimeout(() => {
-          document.getElementById("loadText").innerHTML = "Loading complete!";
-        }, 8000);
-        document.getElementById("loadingCircle").style.display = "none";
-    
+        
         let playButton = document.getElementById("playButton");
-        playButton.style.display = "block";
+        let loaderFilesInterval = setInterval(() => {
+          if (loadedFiles.length < 24) {
+            console.log(loadedFiles) 
+            document.getElementById("loadText").innerHTML = "Loading...";
+          } else {
+            console.log(loadedFiles) 
+            setTimeout(() => {
+              document.getElementById("loadingCircle").style.display = "none";
+              playButton.style.display = "block";
+              document.getElementById("loadText").innerHTML = "Loading complete!";
+              clearInterval(loaderFilesInterval)
+            }, 2000);
+          }
+        }, 2000);
+    
     
         const loadertimeline = new gsap.timeline({
           defaults: {
@@ -650,7 +664,7 @@ if (browserData === 'Chrome') {
     
       sceneInfo.scene.add(pointLight);
     
-      orchidText(sceneInfo.scene)
+      orchidText(sceneInfo.scene, loadedFiles)
       const controls = new THREE.TrackballControls(
         camera3,
         document.getElementById("modal3d")
@@ -699,7 +713,7 @@ if (browserData === 'Chrome') {
     
       const sceneInfo = makeScene(elem, camera4);
         
-      orchidText2(sceneInfo.scene)
+      orchidText2(sceneInfo.scene, loadedFiles)
 
       const controls = new THREE.TrackballControls(
         camera4,
