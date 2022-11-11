@@ -584,10 +584,8 @@ if (browserData === 'Chrome') {
         let playButton = document.getElementById("playButton");
         let loaderFilesInterval = setInterval(() => {
           if (loadedFiles.length < 24) {
-            console.log(loadedFiles) 
             document.getElementById("loadText").innerHTML = "Loading...";
           } else {
-            console.log(loadedFiles) 
             setTimeout(() => {
               document.getElementById("loadingCircle").style.display = "none";
               playButton.style.display = "block";
