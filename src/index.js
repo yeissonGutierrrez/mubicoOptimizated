@@ -48,6 +48,7 @@ if (browserData === 'Chrome') {
 
     let counter = 0
     let paused = false
+    let pointsLoaded = []
 
     let fadeIn = (o) => {
       o.classList.add("fadeIn");
@@ -183,459 +184,467 @@ if (browserData === 'Chrome') {
     
       const raycaster = new THREE.Raycaster();
       let meshCurrentHover = null;
-    
-      points(sceneInfo.scene,pointsNames,objects, loadedFiles )
       
-      Orchids1(sceneInfo.scene, orchids[0], objects, loadedFiles)
-      Orchids2(sceneInfo.scene, orchids[1], objects, loadedFiles)
-      Orchids3(sceneInfo.scene, orchids[0], objects, loadedFiles)
-      Orchids4(sceneInfo.scene, orchids[1], objects, loadedFiles)
-      Orchids5(sceneInfo.scene, orchids[0], objects, loadedFiles)
-      Orchids6(sceneInfo.scene, orchids[1], objects, loadedFiles)
-      Orchids7(sceneInfo.scene, orchids[0], objects, loadedFiles)
-      
-      woodRoad.then((gltf) => {
-        sceneInfo.scene.add(gltf);
-        loadedFiles.push('woodRoad')
-      })
-    
-      structureLightsOne(sceneInfo.scene, loadedFiles)
-      structureLightsTwo(sceneInfo.scene, loadedFiles)
-    
-      structureOne(sceneInfo.scene, loadedFiles)
-    
-      structureTwo(sceneInfo.scene, loadedFiles)
-    
-      metalRails.then((gltf) => {
-        sceneInfo.scene.add(gltf)
-        loadedFiles.push('metalRails')
-      })
-    
-      
-      garden.then((gltf) => {
-        sceneInfo.scene.add(gltf);
-        loadedFiles.push('garden')
-        camera.lookAt(new THREE.Vector3(0, 0, 0));
-        // camera.position.set(-274, -1.5, -6,);
-    
-        let imgFamily = document.createElement('img');
-        imgFamily.src = '/src/images/family.png'
-        let familyTexture = new THREE.Texture(imgFamily);
-        familyTexture.needsUpdate = true;
-        let familyMat = new THREE.SpriteMaterial({ map: familyTexture, transparent: true, alphaTest: 0.2, fog: true, opacity: 1 })
-    
-        let familySprite = new THREE.Sprite(familyMat);
-        familySprite.position.set(-274, -2.8, -45,)
-        familySprite.scale.x = 4
-        familySprite.scale.y = 4
-        sceneInfo.scene.add(familySprite)
-    
-        // const hdrUrls = ['px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png'];
-        // let hdrCubeMap = new THREE.HDRCubeTextureLoader()
-        //   .setPath('/src/textures/')
-        //   .load(hdrUrls);
-    
-        let material = new THREE.MeshPhysicalMaterial({
-          transmission: 1,
-          thickness: 0,
-          roughness: 0,
-          // envMap: hdrCubeMap,
-          metalness: 0,
-          // color: new THREE.Color("rgb(255, 0, 0)"),
-          //para que se puedan ver los sprites
-          depthWrite: false,
-        });
-    
-        sceneInfo.scene.getObjectByName('GLASS_RAIL').children.map(e => {
-          e.geometry.dispose();
-          e.material = material
-        })
-    
-    
-        addTrees(sceneInfo)
-    
-        //textures
-        const earthTexture = new THREE.TextureLoader().load('https://i.ibb.co/f95zZL9/Textures-Com-Grass0153-2-seamless-S.jpg')
-        const woodTexture = new THREE.TextureLoader().load('https://i.ibb.co/wzVk7Ps/WOOD-01.png')
-        const woodTexture2 = new THREE.TextureLoader().load('https://i.ibb.co/TcZgxcg/Walnut-dark-100-DP.jpg')
-        const concreteTexture = new THREE.TextureLoader().load('https://i.ibb.co/LknZNmz/Concrete-blocks-675-DB.jpg')
-        const concreteTexture2 = new THREE.TextureLoader().load('https://i.ibb.co/LknZNmz/Concrete-blocks-675-DB.jpg')
-        const grassyTexture = new THREE.TextureLoader().load('https://i.ibb.co/CVZ6y6Z/Grassy-150-DB.jpg')
-        const grassyTexture2 = new THREE.TextureLoader().load('https://i.ibb.co/S73YDqW/Grass-dark-150-DB.jpg')
-        const galvanizedTexture = new THREE.TextureLoader().load('https://i.ibb.co/JHB0vfr/Galvanized-steel-100-DB.jpg')
-    
-    
-        // woodTexture.wrapS = THREE.RepeatWrapping
-        // woodTexture.wrapT = THREE.RepeatWrapping
-    
-        woodTexture2.wrapS = THREE.RepeatWrapping
-        woodTexture2.wrapT = THREE.RepeatWrapping
-    
-        earthTexture.wrapS = THREE.RepeatWrapping
-        earthTexture.wrapT = THREE.RepeatWrapping
-    
-        concreteTexture.wrapS = THREE.RepeatWrapping
-        concreteTexture.wrapT = THREE.RepeatWrapping
-    
-        concreteTexture2.wrapS = THREE.RepeatWrapping
-        concreteTexture2.wrapT = THREE.RepeatWrapping
-    
-        grassyTexture.wrapS = THREE.RepeatWrapping
-        grassyTexture.wrapT = THREE.RepeatWrapping
-    
-        grassyTexture2.wrapS = THREE.RepeatWrapping
-        grassyTexture2.wrapT = THREE.RepeatWrapping
-    
-        galvanizedTexture.wrapS = THREE.RepeatWrapping
-        galvanizedTexture.wrapT = THREE.RepeatWrapping
-    
-        // woodTexture.repeat.set(20.000, 20.000)
-        // woodTexture.rotation = 80
-    
-        woodTexture2.repeat.set(2.000, 2.000)
-        woodTexture2.rotation = 90
-    
-        concreteTexture.repeat.set(100.000, 100.000)
-        concreteTexture.rotation = 90
-    
-        concreteTexture2.repeat.set(10.000, 10.000)
-        concreteTexture2.rotation = 90
-    
-        grassyTexture.repeat.set(70.000, 70.000)
-    
-        grassyTexture2.repeat.set(50.000, 50.000)
-    
-        galvanizedTexture.repeat.set(10.000, 10.000)
-    
-        earthTexture.repeat.set(50, 50)
-    
-        const maphearth = new THREE.MeshStandardMaterial({
-          map: earthTexture
-        })
-    
-        // const mapWoodFloor = new THREE.MeshStandardMaterial({
-        //   map: woodTexture,
-        //   shadowSide: true
-        // })
-    
-        const mapWoodFloor2 = new THREE.MeshStandardMaterial({
-          map: woodTexture2,
-          shadowSide: true
-        })
-    
-        const mapConcreteFloor = new THREE.MeshStandardMaterial({
-          map: concreteTexture,
-          shadowSide: true
-        })
-    
-        const mapConcreteFloor2 = new THREE.MeshStandardMaterial({
-          map: concreteTexture2,
-          shadowSide: true
-        })
-    
-        const mapGrassyFloor = new THREE.MeshStandardMaterial({
-          map: grassyTexture,
-          shadowSide: true
-        })
-    
-        const mapGrassyFloor2 = new THREE.MeshStandardMaterial({
-          map: grassyTexture2,
-          shadowSide: true
-        })
-    
-        const mapGalvanizedTextureFloor = new THREE.MeshStandardMaterial({
-          map: galvanizedTexture,
-          shadowSide: true
-        })
-    
-    
-        // gltf.sceneInfo.scene.getObjectByName('EARTH').children.map(e => e.material = maphearth)
-        // sceneInfo.scene.getObjectByName('WOOD_PATH_01').children.map(e => e.material = mapWoodFloor)
-        // sceneInfo.scene.getObjectByName('METAL_01').children.map(e => e.material = mapWoodFloor2)
-        // sceneInfo.scene.getObjectByName('PATH_CONCRETE').children.map(e => e.material = mapConcreteFloor)
-        // sceneInfo.scene.getObjectByName('EARTH_TREES').children.map(e => e.material = mapGrassyFloor2)
-        // sceneInfo.scene.getObjectByName('EARTH_SHRUB').children.map(e => e.material = mapGrassyFloor)
-        // sceneInfo.scene.getObjectByName('Object_1').material = mapConcreteFloor2
-        // sceneInfo.scene.getObjectByName('Object_668').material = mapWoodFloor
-        // sceneInfo.scene.getObjectByName('Object_660').material = mapWoodFloor
-        // sceneInfo.scene.getObjectByName('Object_666').material = mapWoodFloor2
-        // sceneInfo.scene.getObjectByName('Object_665').material = mapWoodFloor2
-        // sceneInfo.scene.getObjectByName('Object_663').material = mapWoodFloor2
-    
-        const pointer = new THREE.Vector2(300, 300);
-    
-        function onPointerMove(event) {
-          pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-          pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
-        }
-    
-        window.addEventListener("pointermove", onPointerMove);
-    
-        const timeline = new gsap.timeline({
-          defaults: {
-            duration: 1,
-          },
-        });
-    
-        const gsapAnimations = (mesh) => {
-          let point = sceneInfo.scene.getObjectByName(mesh);
-          let currentPos = {
-            x: point.geometry.attributes.position.array[0] - 184,
-            y: point.geometry.attributes.position.array[1] - 3.2,
-            z: point.geometry.attributes.position.array[2] - 28,
-          }
-          timeline.to(orbitControls.target, {
-            x: point.geometry.attributes.position.array[0] - 184,
-            y: point.geometry.attributes.position.array[1] - 3.2,
-            z: point.geometry.attributes.position.array[2] - 28,
-          });
-          // aqui se modifica la camara despues de posicionarse
-          //  .to(camera.position, {
-          //    x: animationsParams[mesh].camera.x,
-          //    y: animationsParams[mesh].camera.y,
-          //    z: animationsParams[mesh].camera.z,
-          //  }, '-=1.0')  // no agregar dilay a la primera animacion porque puede ocasionar un error
-          //  .to(camera, {
-          //   //  zoom:animationsParams.cube1.zoom,
-          //    onUpdate: () => {
-          //      camera.updateProjectionMatrix()
-          //    }
-          //  }, "-=1.0")
-    
-          //  cameraFolder.updateDisplay()
-        };
-    
-        
-    
-        const objectForCollitions = () => {
-          return objects //tambien podemos pasarles grupos mediante three.groups
-        }
-    
-        //handle mesh click
-        let meshCurrentClick = null
-    
-        const handleMeshsClick = () => {
-          let modal = document.getElementById('modal')
-          let modal3d = document.getElementById('modal3d')
-          let modal3d2 = document.getElementById('modal3d2')
-          let close = document.getElementById('close')
-          let buttonModal3d = document.getElementById('buttonModal3d')
-          let buttonModal3d2 = document.getElementById('buttonModal3d2')
-    
-          buttonModal3d.addEventListener('click', () => {
-            modal3d.style.display = 'block'
-            modal.style.display = 'none'
+
+      points(sceneInfo.scene,pointsNames,objects, loadedFiles, pointsLoaded )
+
+      let pointLoadInterval = setInterval(() => {
+        if (pointsLoaded[0] === 'true') {
+          Orchids1(sceneInfo.scene, orchids[0], objects, loadedFiles)
+          Orchids2(sceneInfo.scene, orchids[1], objects, loadedFiles)
+          Orchids3(sceneInfo.scene, orchids[0], objects, loadedFiles)
+          Orchids4(sceneInfo.scene, orchids[1], objects, loadedFiles)
+          Orchids5(sceneInfo.scene, orchids[0], objects, loadedFiles)
+          Orchids6(sceneInfo.scene, orchids[1], objects, loadedFiles)
+          Orchids7(sceneInfo.scene, orchids[0], objects, loadedFiles)
+          
+          woodRoad.then((gltf) => {
+            sceneInfo.scene.add(gltf);
+            loadedFiles.push('woodRoad')
           })
-
-          buttonModal3d2.addEventListener('click', () => {
-            modal3d2.style.display = 'block'
-            modal.style.display = 'none'
-          })
-    
-          close.addEventListener('click', () => {
-            modal.style.display = 'none'
-          })
-    
-          try {
-            let orchidInfo1 = document.getElementById('orchidInfo1')
-            let orchidInfo2 = document.getElementById('orchidInfo2')
-            switch (meshCurrentClick.name) {
-              case pointsNames.find(e => e === meshCurrentClick.name):
-                gsapAnimations(meshCurrentClick.name)
-    
-                return meshCurrentClick = null
-    
-              case 'OrchidBox1':
-                  orchidInfo2.style.display = 'none'
-                  orchidInfo1.style.display = 'block'
-                  modal.style.display = 'flex'
-
-                  buttonModal3d2.style.display = 'none'
-                  buttonModal3d.style.display = 'flex'
-                  
-
-                  return meshCurrentClick = null 
-    
-              case 'OrchidBox2':
-                  orchidInfo1.style.display = 'none'
-                  orchidInfo2.style.display = 'block'
-                  modal.style.display = 'flex'
-
-                  buttonModal3d.style.display = 'none'
-                  buttonModal3d2.style.display = 'flex'
-                  
-
-
-                  return meshCurrentClick = null     
-    
-              case 'OrchidBox3':
-                  orchidInfo2.style.display = 'none'
-                  orchidInfo1.style.display = 'block'
-                  modal.style.display = 'flex'
-
-                  buttonModal3d2.style.display = 'none'
-                  buttonModal3d.style.display = 'flex'
-                  
-
-
-                  return meshCurrentClick = null 
-    
-              case 'OrchidBox4':
-                  orchidInfo1.style.display = 'none'
-                  orchidInfo2.style.display = 'block'
-                  modal.style.display = 'flex'
-
-                  buttonModal3d.style.display = 'none'
-                  buttonModal3d2.style.display = 'flex'
-                  
-
-
-                  return meshCurrentClick = null     
-    
-              case 'OrchidBox5':
-                  orchidInfo2.style.display = 'none'
-                  orchidInfo1.style.display = 'block'
-                  modal.style.display = 'flex'
-
-                  buttonModal3d2.style.display = 'none'
-                  buttonModal3d.style.display = 'flex'
-                  
-
-
-                  return meshCurrentClick = null 
-    
-              case 'OrchidBox6':
-                  orchidInfo1.style.display = 'none'
-                  orchidInfo2.style.display = 'block'
-                  modal.style.display = 'flex'
-
-                  buttonModal3d.style.display = 'none'
-                  buttonModal3d2.style.display = 'flex'
-                  
-
-
-                  return meshCurrentClick = null 
-              
-                 
-              case 'OrchidBox7':
-                orchidInfo2.style.display = 'none'
-                orchidInfo1.style.display = 'block'
-                modal.style.display = 'flex'
-
-                buttonModal3d2.style.display = 'none'
-                buttonModal3d.style.display = 'flex'
-                
-
-                return meshCurrentClick = null 
-             
-              default:
-                meshCurrentClick = null
-                break;
-            }
-    
-          } catch (error) {
-            console.log(error)
-          }
-        }
-    
-    
-    
-        window.addEventListener('dblclick', handleMeshsClick)
-    
-        var clock = new THREE.Clock()
-
-        const animate = () => {
-    
-          raycaster.setFromCamera(pointer, camera)
-    
-          const collitions = objectForCollitions()
-    
-          const intersects = raycaster.intersectObjects(collitions)
-          // console.log(intersects)
-    
-          //mouse on leave
-          if (meshCurrentHover) {
-            meshCurrentHover = null
-            meshCurrentClick = null
-          }
-    
-    
-          //mouse hover and click
-          if (intersects.length) {
-            meshCurrentHover = intersects[0].object
-            meshCurrentClick = intersects[0].object
-          } else if (meshCurrentHover) {
-            meshCurrentHover = null
-          }
-    
-          // orbitControls.update();
-          // controls.update(clock.getDelta())
-          // renderer.render(sceneInfo.scene, camera);
-          requestAnimationFrame(animate);
-        };
-    
-        animate()
-    
-    
-    
-        //loader
         
+          structureLightsOne(sceneInfo.scene, loadedFiles)
+          structureLightsTwo(sceneInfo.scene, loadedFiles)
         
-        let playButton = document.getElementById("playButton");
-        let loaderFilesInterval = setInterval(() => {
-          if (loadedFiles.length < 24) {
-            document.getElementById("loadText").innerHTML = "Loading...";
-          } else {
-            setTimeout(() => {
-              document.getElementById("loadingCircle").style.display = "none";
-              playButton.style.display = "block";
-              document.getElementById("loadText").innerHTML = "Loading complete!";
-              clearInterval(loaderFilesInterval)
-            }, 2000);
-          }
-        }, 2000);
-    
-    
-        const loadertimeline = new gsap.timeline({
-          defaults: {
-            duration: 10,
-          },
-        });
-    
-        playButton.addEventListener("click", () => {
-          if (counter >= 10) {
-            counter = 0
-            loopMachine.start()
-          }
-          fadeOut(document.querySelector("#loader"));
-          let activitiInterval = setInterval(() => {
-            if (counter <= 10) {
-              counter++
-            } else {
-              paused = true
-              clearInterval(activitiInterval)
-              document.getElementById("loader").style.display = "flex";
-              fadeIn(document.querySelector("#loader"));
-              loopMachine.stop()
-            }
-          }, 10000);
-
-          setTimeout(() => {
-            document.getElementById("loader").style.display = "none";
-          }, 2000);
-    
-          if (!paused) {
-            loadertimeline.to(orbitControls.target, {
-              x: -274,
-              y: -1.5,
-              z: -6,
+          structureOne(sceneInfo.scene, loadedFiles)
+        
+          structureTwo(sceneInfo.scene, loadedFiles)
+        
+          metalRails.then((gltf) => {
+            sceneInfo.scene.add(gltf)
+            loadedFiles.push('metalRails')
+          })
+        
+          
+          garden.then((gltf) => {
+            sceneInfo.scene.add(gltf);
+            loadedFiles.push('garden')
+            camera.lookAt(new THREE.Vector3(0, 0, 0));
+            // camera.position.set(-274, -1.5, -6,);
+        
+            let imgFamily = document.createElement('img');
+            imgFamily.src = '/src/images/family.png'
+            let familyTexture = new THREE.Texture(imgFamily);
+            familyTexture.needsUpdate = true;
+            let familyMat = new THREE.SpriteMaterial({ map: familyTexture, transparent: true, alphaTest: 0.2, fog: true, opacity: 1 })
+        
+            let familySprite = new THREE.Sprite(familyMat);
+            familySprite.position.set(-274, -2.8, -45,)
+            familySprite.scale.x = 4
+            familySprite.scale.y = 4
+            sceneInfo.scene.add(familySprite)
+        
+            // const hdrUrls = ['px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png'];
+            // let hdrCubeMap = new THREE.HDRCubeTextureLoader()
+            //   .setPath('/src/textures/')
+            //   .load(hdrUrls);
+        
+            let material = new THREE.MeshPhysicalMaterial({
+              transmission: 1,
+              thickness: 0,
+              roughness: 0,
+              // envMap: hdrCubeMap,
+              metalness: 0,
+              // color: new THREE.Color("rgb(255, 0, 0)"),
+              //para que se puedan ver los sprites
+              depthWrite: false,
             });
-          }
+        
+            sceneInfo.scene.getObjectByName('GLASS_RAIL').children.map(e => {
+              e.geometry.dispose();
+              e.material = material
+            })
+        
+        
+            addTrees(sceneInfo)
+        
+            //textures
+            const earthTexture = new THREE.TextureLoader().load('https://i.ibb.co/f95zZL9/Textures-Com-Grass0153-2-seamless-S.jpg')
+            const woodTexture = new THREE.TextureLoader().load('https://i.ibb.co/wzVk7Ps/WOOD-01.png')
+            const woodTexture2 = new THREE.TextureLoader().load('https://i.ibb.co/TcZgxcg/Walnut-dark-100-DP.jpg')
+            const concreteTexture = new THREE.TextureLoader().load('https://i.ibb.co/LknZNmz/Concrete-blocks-675-DB.jpg')
+            const concreteTexture2 = new THREE.TextureLoader().load('https://i.ibb.co/LknZNmz/Concrete-blocks-675-DB.jpg')
+            const grassyTexture = new THREE.TextureLoader().load('https://i.ibb.co/CVZ6y6Z/Grassy-150-DB.jpg')
+            const grassyTexture2 = new THREE.TextureLoader().load('https://i.ibb.co/S73YDqW/Grass-dark-150-DB.jpg')
+            const galvanizedTexture = new THREE.TextureLoader().load('https://i.ibb.co/JHB0vfr/Galvanized-steel-100-DB.jpg')
+        
+        
+            // woodTexture.wrapS = THREE.RepeatWrapping
+            // woodTexture.wrapT = THREE.RepeatWrapping
+        
+            woodTexture2.wrapS = THREE.RepeatWrapping
+            woodTexture2.wrapT = THREE.RepeatWrapping
+        
+            earthTexture.wrapS = THREE.RepeatWrapping
+            earthTexture.wrapT = THREE.RepeatWrapping
+        
+            concreteTexture.wrapS = THREE.RepeatWrapping
+            concreteTexture.wrapT = THREE.RepeatWrapping
+        
+            concreteTexture2.wrapS = THREE.RepeatWrapping
+            concreteTexture2.wrapT = THREE.RepeatWrapping
+        
+            grassyTexture.wrapS = THREE.RepeatWrapping
+            grassyTexture.wrapT = THREE.RepeatWrapping
+        
+            grassyTexture2.wrapS = THREE.RepeatWrapping
+            grassyTexture2.wrapT = THREE.RepeatWrapping
+        
+            galvanizedTexture.wrapS = THREE.RepeatWrapping
+            galvanizedTexture.wrapT = THREE.RepeatWrapping
+        
+            // woodTexture.repeat.set(20.000, 20.000)
+            // woodTexture.rotation = 80
+        
+            woodTexture2.repeat.set(2.000, 2.000)
+            woodTexture2.rotation = 90
+        
+            concreteTexture.repeat.set(100.000, 100.000)
+            concreteTexture.rotation = 90
+        
+            concreteTexture2.repeat.set(10.000, 10.000)
+            concreteTexture2.rotation = 90
+        
+            grassyTexture.repeat.set(70.000, 70.000)
+        
+            grassyTexture2.repeat.set(50.000, 50.000)
+        
+            galvanizedTexture.repeat.set(10.000, 10.000)
+        
+            earthTexture.repeat.set(50, 50)
+        
+            const maphearth = new THREE.MeshStandardMaterial({
+              map: earthTexture
+            })
+        
+            // const mapWoodFloor = new THREE.MeshStandardMaterial({
+            //   map: woodTexture,
+            //   shadowSide: true
+            // })
+        
+            const mapWoodFloor2 = new THREE.MeshStandardMaterial({
+              map: woodTexture2,
+              shadowSide: true
+            })
+        
+            const mapConcreteFloor = new THREE.MeshStandardMaterial({
+              map: concreteTexture,
+              shadowSide: true
+            })
+        
+            const mapConcreteFloor2 = new THREE.MeshStandardMaterial({
+              map: concreteTexture2,
+              shadowSide: true
+            })
+        
+            const mapGrassyFloor = new THREE.MeshStandardMaterial({
+              map: grassyTexture,
+              shadowSide: true
+            })
+        
+            const mapGrassyFloor2 = new THREE.MeshStandardMaterial({
+              map: grassyTexture2,
+              shadowSide: true
+            })
+        
+            const mapGalvanizedTextureFloor = new THREE.MeshStandardMaterial({
+              map: galvanizedTexture,
+              shadowSide: true
+            })
+        
+        
+            // gltf.sceneInfo.scene.getObjectByName('EARTH').children.map(e => e.material = maphearth)
+            // sceneInfo.scene.getObjectByName('WOOD_PATH_01').children.map(e => e.material = mapWoodFloor)
+            // sceneInfo.scene.getObjectByName('METAL_01').children.map(e => e.material = mapWoodFloor2)
+            // sceneInfo.scene.getObjectByName('PATH_CONCRETE').children.map(e => e.material = mapConcreteFloor)
+            // sceneInfo.scene.getObjectByName('EARTH_TREES').children.map(e => e.material = mapGrassyFloor2)
+            // sceneInfo.scene.getObjectByName('EARTH_SHRUB').children.map(e => e.material = mapGrassyFloor)
+            // sceneInfo.scene.getObjectByName('Object_1').material = mapConcreteFloor2
+            // sceneInfo.scene.getObjectByName('Object_668').material = mapWoodFloor
+            // sceneInfo.scene.getObjectByName('Object_660').material = mapWoodFloor
+            // sceneInfo.scene.getObjectByName('Object_666').material = mapWoodFloor2
+            // sceneInfo.scene.getObjectByName('Object_665').material = mapWoodFloor2
+            // sceneInfo.scene.getObjectByName('Object_663').material = mapWoodFloor2
+        
+            const pointer = new THREE.Vector2(300, 300);
+        
+            function onPointerMove(event) {
+              pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+              pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            }
+        
+            window.addEventListener("pointermove", onPointerMove);
+        
+            const timeline = new gsap.timeline({
+              defaults: {
+                duration: 1,
+              },
+            });
+        
+            const gsapAnimations = (mesh) => {
+              let point = sceneInfo.scene.getObjectByName(mesh);
+              let currentPos = {
+                x: point.geometry.attributes.position.array[0] - 184,
+                y: point.geometry.attributes.position.array[1] - 3.2,
+                z: point.geometry.attributes.position.array[2] - 28,
+              }
+              timeline.to(orbitControls.target, {
+                x: point.geometry.attributes.position.array[0] - 184,
+                y: point.geometry.attributes.position.array[1] - 3.2,
+                z: point.geometry.attributes.position.array[2] - 28,
+              });
+              // aqui se modifica la camara despues de posicionarse
+              //  .to(camera.position, {
+              //    x: animationsParams[mesh].camera.x,
+              //    y: animationsParams[mesh].camera.y,
+              //    z: animationsParams[mesh].camera.z,
+              //  }, '-=1.0')  // no agregar dilay a la primera animacion porque puede ocasionar un error
+              //  .to(camera, {
+              //   //  zoom:animationsParams.cube1.zoom,
+              //    onUpdate: () => {
+              //      camera.updateProjectionMatrix()
+              //    }
+              //  }, "-=1.0")
+        
+              //  cameraFolder.updateDisplay()
+            };
+        
+            
+        
+            const objectForCollitions = () => {
+              return objects //tambien podemos pasarles grupos mediante three.groups
+            }
+        
+            //handle mesh click
+            let meshCurrentClick = null
+        
+            const handleMeshsClick = () => {
+              let modal = document.getElementById('modal')
+              let modal3d = document.getElementById('modal3d')
+              let modal3d2 = document.getElementById('modal3d2')
+              let close = document.getElementById('close')
+              let buttonModal3d = document.getElementById('buttonModal3d')
+              let buttonModal3d2 = document.getElementById('buttonModal3d2')
+        
+              buttonModal3d.addEventListener('click', () => {
+                modal3d.style.display = 'block'
+                modal.style.display = 'none'
+              })
     
-          // orbitControls.update()
-        });
-        console.log("Loading complete!");
-      });
+              buttonModal3d2.addEventListener('click', () => {
+                modal3d2.style.display = 'block'
+                modal.style.display = 'none'
+              })
+        
+              close.addEventListener('click', () => {
+                modal.style.display = 'none'
+              })
+        
+    
+              try {
+                let orchidInfo1 = document.getElementById('orchidInfo1')
+                let orchidInfo2 = document.getElementById('orchidInfo2')
+                switch (meshCurrentClick.name) {
+                  case pointsNames.find(e => e === meshCurrentClick.name):
+                    gsapAnimations(meshCurrentClick.name)
+        
+                    return meshCurrentClick = null
+        
+                  case 'OrchidBox1':
+                      orchidInfo2.style.display = 'none'
+                      orchidInfo1.style.display = 'block'
+                      modal.style.display = 'flex'
+    
+                      buttonModal3d2.style.display = 'none'
+                      buttonModal3d.style.display = 'flex'
+                      
+    
+                      return meshCurrentClick = null 
+        
+                  case 'OrchidBox2':
+                      orchidInfo1.style.display = 'none'
+                      orchidInfo2.style.display = 'block'
+                      modal.style.display = 'flex'
+    
+                      buttonModal3d.style.display = 'none'
+                      buttonModal3d2.style.display = 'flex'
+                      
+    
+    
+                      return meshCurrentClick = null     
+        
+                  case 'OrchidBox3':
+                      orchidInfo2.style.display = 'none'
+                      orchidInfo1.style.display = 'block'
+                      modal.style.display = 'flex'
+    
+                      buttonModal3d2.style.display = 'none'
+                      buttonModal3d.style.display = 'flex'
+                      
+    
+    
+                      return meshCurrentClick = null 
+        
+                  case 'OrchidBox4':
+                      orchidInfo1.style.display = 'none'
+                      orchidInfo2.style.display = 'block'
+                      modal.style.display = 'flex'
+    
+                      buttonModal3d.style.display = 'none'
+                      buttonModal3d2.style.display = 'flex'
+                      
+    
+    
+                      return meshCurrentClick = null     
+        
+                  case 'OrchidBox5':
+                      orchidInfo2.style.display = 'none'
+                      orchidInfo1.style.display = 'block'
+                      modal.style.display = 'flex'
+    
+                      buttonModal3d2.style.display = 'none'
+                      buttonModal3d.style.display = 'flex'
+                      
+    
+    
+                      return meshCurrentClick = null 
+        
+                  case 'OrchidBox6':
+                      orchidInfo1.style.display = 'none'
+                      orchidInfo2.style.display = 'block'
+                      modal.style.display = 'flex'
+    
+                      buttonModal3d.style.display = 'none'
+                      buttonModal3d2.style.display = 'flex'
+                      
+    
+    
+                      return meshCurrentClick = null 
+                  
+                     
+                  case 'OrchidBox7':
+                    orchidInfo2.style.display = 'none'
+                    orchidInfo1.style.display = 'block'
+                    modal.style.display = 'flex'
+    
+                    buttonModal3d2.style.display = 'none'
+                    buttonModal3d.style.display = 'flex'
+                    
+    
+                    return meshCurrentClick = null 
+                 
+                  default:
+                    meshCurrentClick = null
+                    break;
+                }
+        
+              } catch (error) {
+                console.log(error)
+              }
+            }
+        
+        
+        
+            window.addEventListener('dblclick', handleMeshsClick)
+        
+            var clock = new THREE.Clock()
+    
+            const animate = () => {
+        
+              raycaster.setFromCamera(pointer, camera)
+      
+              const collitions = objectForCollitions()
+        
+              const intersects = raycaster.intersectObjects(collitions)
+              // console.log(intersects)
+        
+              //mouse on leave
+              if (meshCurrentHover) {
+                meshCurrentHover = null
+                meshCurrentClick = null
+              }
+        
+        
+              //mouse hover and click
+              if (intersects.length) {
+                meshCurrentHover = intersects[0].object
+                meshCurrentClick = intersects[0].object
+              } else if (meshCurrentHover) {
+                meshCurrentHover = null
+              }
+        
+              // orbitControls.update();
+              // controls.update(clock.getDelta())
+              // renderer.render(sceneInfo.scene, camera);
+              requestAnimationFrame(animate);
+            };
+        
+            animate()
+            
+            //loader
+            
+            
+            let playButton = document.getElementById("playButton");
+            let loaderFilesInterval = setInterval(() => {
+              if (loadedFiles.length < 24) {
+                document.getElementById("loadText").innerHTML = "Loading...";
+              } else {
+                setTimeout(() => {
+                  document.getElementById("loadingCircle").style.display = "none";
+                  playButton.style.display = "block";
+                  document.getElementById("loadText").innerHTML = "Loading complete!";
+                  clearInterval(loaderFilesInterval)
+                }, 2000);
+              }
+            }, 2000);
+        
+        
+            const loadertimeline = new gsap.timeline({
+              defaults: {
+                duration: 10,
+              },
+            });
+        
+            playButton.addEventListener("click", () => {
+              if (counter >= 10) {
+                counter = 0
+                loopMachine.start()
+              }
+              fadeOut(document.querySelector("#loader"));
+              let activitiInterval = setInterval(() => {
+                if (counter <= 10) {
+                  counter++
+                } else {
+                  paused = true
+                  clearInterval(activitiInterval)
+                  document.getElementById("loader").style.display = "flex";
+                  fadeIn(document.querySelector("#loader"));
+                  loopMachine.stop()
+                }
+              }, 10000);
+    
+              setTimeout(() => {
+                document.getElementById("loader").style.display = "none";
+              }, 2000);
+        
+              if (!paused) {
+                loadertimeline.to(orbitControls.target, {
+                  x: -274,
+                  y: -1.5,
+                  z: -6,
+                });
+              }
+        
+              // orbitControls.update()
+            });
+            console.log("Loading complete!");
+          });
+          clearInterval(pointLoadInterval)
+        } else {
+          console.log('error loading points')
+        }
+      }, 500);
+
     
       return () => {
         renderer.render(sceneInfo.scene, sceneInfo.camera);

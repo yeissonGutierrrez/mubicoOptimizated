@@ -1,4 +1,4 @@
-let points = ((scene,pointsNames, objects, loadedFiles) => {
+let points = ((scene,pointsNames, objects, loadedFiles, pointsLoaded) => {
 
   const manager = new THREE.LoadingManager();
 manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
@@ -42,15 +42,22 @@ loader.setDRACOLoader( dracoLoader );
 
     gltf.scene.position.set(-184, -5, -28)
     
-    for (let index = 673; index <= 837; index++) {
-      let element = `Object_${index}`;
-      pointsNames.push(element)
+    const putPointsPos = () => {
+      for (let index = 673; index <= 837; index++) {
+        let element = `Object_${index}`;
+        pointsNames.push(element)
+      }
+      pointsNames.map((p) => {
+        let cube = gltf.scene.getObjectByName('PATH-_DOTS').children.find(e => e.name === p)
+        objects.push(cube)
+      })
+
+      pointsLoaded.push('true')
     }
+
+    putPointsPos()
+
     
-    pointsNames.map((p) => {
-      let cube = gltf.scene.getObjectByName('PATH-_DOTS').children.find(e => e.name === p)
-      objects.push(cube)
-    })
 
     scene.add(gltf.scene);
     });
