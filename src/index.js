@@ -540,6 +540,7 @@ if (browserData === 'Chrome') {
     
     
         window.addEventListener('dblclick', handleMeshsClick)
+        window.addEventListener('touchstart', handleMeshsClick)
     
         var clock = new THREE.Clock()
 
